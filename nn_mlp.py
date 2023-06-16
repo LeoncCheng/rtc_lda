@@ -19,17 +19,17 @@ class CustomDataset(Dataset):
         return self.data[idx], self.target[idx]
 
 # 读取数据集
-data = pd.read_csv('packet_loss_data.csv')  
+data = pd.read_csv('packet_loss_data.csv')
 
 # 随机化处理数据
-data = data.sample(frac=1, random_state=42)
+data = data.sample(frac=1)
 
 # 划分特征和标签
 X = data.drop('packet_loss_type', axis=1)  # 特征列
 y = data['packet_loss_type']  # 标签列
 
 # 划分训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # 创建自定义数据集对象
 train_dataset = CustomDataset(X_train, y_train)
@@ -55,8 +55,8 @@ class MLP(nn.Module):
 
 # 设置训练相关参数
 input_size = len(X.columns)
-hidden_size1 = 64
-hidden_size2 = 32
+hidden_size1 = 128
+hidden_size2 = 64
 output_size = len(y.unique())
 batch_size = 32
 num_epochs = 500
